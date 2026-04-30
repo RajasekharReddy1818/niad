@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NIAD</title>
+
+    <style>
+        body {
+            margin: 0;
+            background: #fdfdfd;
+            overflow-x: hidden;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* TOP RIGHT ABOUT */
+        .top-right {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 10;
+            transition: 0.3s;
+        }
+
+            .top-right.hidden {
+                opacity: 0;
+                pointer-events: none;
+            }
+
+        /* ABOUT BUTTON */
+        .about-btn {
+            border: none;
+            background: transparent;
+            font-size: 12px;
+            letter-spacing: 2px;
+            cursor: pointer;
+        }
+
+        /* CENTER */
+        .container {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        /* LOGO */
+        .logo {
+            width: 160px;
+        }
+
+        .tagline {
+            margin-top: 15px;
+            letter-spacing: 4px;
+            color: #444;
+            font-size: 13px;
+        }
+
+        /* BUTTON */
+        button {
+            margin-top: 25px;
+            padding: 10px 24px;
+            border: 1px solid black;
+            background: transparent;
+            cursor: pointer;
+            letter-spacing: 2px;
+        }
+
+            button:hover {
+                background: black;
+                color: white;
+            }
+
+        /* OVERLAY */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.2);
+            opacity: 0;
+            pointer-events: none;
+            transition: 0.4s;
+            z-index: 4;
+        }
+
+            .overlay.active {
+                opacity: 1;
+                pointer-events: all;
+            }
+        .panel {
+            position: fixed;
+            bottom: -100%;
+            left: 50%;
+            transform: translateX(-50%); /* centers it properly */
+
+            width: 100%;
+            max-width: 1200px; /* keeps it clean and centered */
+
+            height: 80vh;
+            background: #fafafa;
+            z-index: 5;
+            border-top-left-radius: 25px;
+            border-top-right-radius: 25px;
+            transition: 0.5s ease;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+            .panel.active {
+                bottom: 0;
+            }
+
+        /* ABOUT PANEL */
+        .right-panel {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 350px;
+            height: 100%;
+            background: #fafafa;
+            z-index: 6;
+            transition: 0.5s;
+            padding: 25px;
+        }
+
+            .right-panel.active {
+                right: 0;
+            }
+
+        /* HEADER */
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        /* FIXED CLOSE BUTTON */
+        .close-btn {
+            font-size: 20px;
+            cursor: pointer;
+            padding: 5px 10px;
+            z-index: 20;
+        }
+
+        /* GRID */
+        .grid {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            width: 240px;
+            height: 380px;
+            border-radius: 18px;
+            overflow: hidden;
+            background: #fff;
+        }
+
+            .card img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+        /* ABOUT TEXT */
+        .about-content {
+            line-height: 1.8;
+            color: #444;
+        }
+
+        /* MOBILE */
+        @media (max-width: 600px) {
+            .right-panel {
+                width: 100%;
+            }
+
+            .card {
+                width: 90%;
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ABOUT BUTTON -->
+    <div class="top-right" id="aboutBtnWrap">
+        <button class="about-btn" onclick="openAbout()">ABOUT</button>
+    </div>
+
+    <!-- CENTER -->
+    <div class="container">
+        <img src="logo.png" class="logo">
+        <div class="tagline">BY NIAD</div>
+        <button onclick="openProducts()">ENTER</button>
+    </div>
+
+    <!-- OVERLAY -->
+    <div class="overlay" id="overlay" onclick="closeAll()"></div>
+
+    <!-- PRODUCTS -->
+    <div class="panel" id="productsPanel">
+        <div class="panel-header">
+            <h3>Collection</h3>
+            <span class="close-btn" onclick="closeAll()">✕</span>
+        </div>
+
+        <div class="grid">
+            <div class="card"><img src="img1.jpeg"></div>
+            <div class="card"><img src="img2.jpeg"></div>
+            <div class="card"><img src="img3.jpeg"></div>
+            <div class="card"><img src="img4.jpeg"></div>
+        </div>
+    </div>
+
+    <!-- ABOUT -->
+    <div class="right-panel" id="aboutPanel">
+        <div class="panel-header">
+            <h3>About NIAD</h3>
+            <span class="close-btn" onclick="closeAll()">✕</span>
+        </div>
+
+        <div class="about-content">
+            <p>NIAD was never created to be perfect.</p>
+
+            <p>
+                It lives in the space between raw, unfinished, and beautifully real.
+                We believe beauty exists in imperfection—where irregular forms,
+                unexpected details, and handmade textures create true character.
+            </p>
+
+            <p>
+                Every piece is intentionally imperfect, designed to feel authentic rather
+                than polished. NIAD embraces individuality, quiet boldness, and
+                self-expression for those who find beauty in the undone and the uncommon.
+            </p>
+
+            <p><strong>Contact:</strong> by.niad@gmail.com</p>
+        </div>
+    </div>
+
+    <script>
+        function openProducts() {
+            document.getElementById("productsPanel").classList.add("active");
+            document.getElementById("overlay").classList.add("active");
+        }
+
+        function openAbout() {
+            document.getElementById("aboutPanel").classList.add("active");
+            document.getElementById("overlay").classList.add("active");
+
+            // HIDE ABOUT BUTTON
+            document.getElementById("aboutBtnWrap").classList.add("hidden");
+        }
+
+        function closeAll() {
+            document.getElementById("productsPanel").classList.remove("active");
+            document.getElementById("aboutPanel").classList.remove("active");
+            document.getElementById("overlay").classList.remove("active");
+
+            // SHOW ABOUT BUTTON AGAIN
+            document.getElementById("aboutBtnWrap").classList.remove("hidden");
+        }
+    </script>
+
+</body>
+</html>
