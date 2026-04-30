@@ -18,14 +18,13 @@
             top: 15px;
             right: 15px;
             z-index: 10;
+            transition: 0.3s;
         }
 
-        .about-btn {
-            background: transparent;
-            border: none;
-            letter-spacing: 2px;
-            cursor: pointer;
-        }
+            .top-right.hidden {
+                opacity: 0;
+                pointer-events: none;
+            }
 
         /* CENTER */
         .container {
@@ -52,6 +51,7 @@
             padding: 10px 24px;
             border: 1px solid black;
             background: transparent;
+            cursor: pointer;
         }
 
             button:hover {
@@ -67,6 +67,7 @@
             opacity: 0;
             pointer-events: none;
             transition: .3s;
+            z-index: 5;
         }
 
             .overlay.active {
@@ -74,21 +75,21 @@
                 pointer-events: auto;
             }
 
-        /* PRODUCTS PANEL */
+        /* 🔥 PRODUCTS PANEL (FIXED CENTER PROPERLY) */
         .panel {
             position: fixed;
             bottom: -100%;
-            left: 0;
+            left: 50%;
+            transform: translateX(-50%);
             width: 100%;
             max-width: 1100px;
-            margin: auto;
-            right: 0;
             height: 80vh;
             background: #fafafa;
             border-radius: 20px 20px 0 0;
-            transition: .4s;
+            transition: 0.4s ease;
             padding: 20px;
             overflow-y: auto;
+            z-index: 6;
         }
 
             .panel.active {
@@ -99,16 +100,20 @@
         .right-panel {
             position: fixed;
             top: 0;
-            right: -100%;
-            width: 350px;
+            right: 0;
+            width: 100%;
+            max-width: 380px;
             height: 100%;
             background: #fafafa;
+            transform: translateX(100%);
+            transition: transform 0.4s ease;
             padding: 25px;
-            transition: .4s;
+            z-index: 7;
+            overflow-y: auto;
         }
 
             .right-panel.active {
-                right: 0;
+                transform: translateX(0);
             }
 
         /* HEADER */
@@ -122,16 +127,18 @@
             cursor: pointer;
         }
 
-        /* GRID (desktop) */
+        /* GRID */
         .grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            display: flex;
+            justify-content: center;
             gap: 20px;
+            flex-wrap: wrap;
         }
 
-        /* CARD */
+        /* 🔥 CARD (FINAL FIXED SIZE) */
         .card {
-            height: 320px;
+            width: 240px;
+            height: 425px;
             border-radius: 15px;
             overflow: hidden;
         }
@@ -148,30 +155,31 @@
             color: #444;
         }
 
-        /* 🔥 MOBILE FIX (THIS IS WHERE YOUR OLD SITE BROKE) */
+        /* 🔥 MOBILE FIX (REAL ONE, NOT HALF FIXES) */
         @media (max-width: 768px) {
 
             .panel {
                 width: 100%;
                 max-width: 100%;
+                left: 0;
+                transform: none;
                 border-radius: 20px 20px 0 0;
                 height: 85vh;
             }
 
-            .right-panel {
-                width: 100%;
-            }
-
             .grid {
-                grid-template-columns: 1fr;
+                flex-direction: column;
+                align-items: center;
             }
 
             .card {
-                height: 260px;
+                width: 90%;
+                max-width: 260px;
+                height: 425px;
             }
 
-            .logo {
-                width: 110px;
+            .right-panel {
+                max-width: 100%;
             }
         }
     </style>
@@ -180,7 +188,7 @@
 <body>
 
     <div class="top-right" id="aboutWrap">
-        <button class="about-btn" onclick="openAbout()">ABOUT</button>
+        <button onclick="openAbout()">ABOUT</button>
     </div>
 
     <div class="container">
@@ -218,11 +226,13 @@
 
             <p>
                 It lives in the space between raw, unfinished, and beautifully real.
-                We believe beauty exists in imperfection.
+                We believe beauty exists in imperfection—where irregular forms,
+                unexpected details, and handmade textures create true character.
             </p>
 
             <p>
-                Every piece is intentionally imperfect.
+                Every piece is intentionally imperfect, designed to feel authentic rather
+                than polished.
             </p>
 
             <p><strong>Contact:</strong> by.niad@gmail.com</p>
@@ -238,14 +248,14 @@
         function openAbout() {
             document.getElementById("aboutPanel").classList.add("active");
             document.getElementById("overlay").classList.add("active");
-            document.getElementById("aboutWrap").style.display = "none";
+            document.getElementById("aboutWrap").classList.add("hidden");
         }
 
         function closeAll() {
             document.getElementById("productsPanel").classList.remove("active");
             document.getElementById("aboutPanel").classList.remove("active");
             document.getElementById("overlay").classList.remove("active");
-            document.getElementById("aboutWrap").style.display = "block";
+            document.getElementById("aboutWrap").classList.remove("hidden");
         }
     </script>
 
