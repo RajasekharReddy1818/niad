@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- 🔥 ZOOM DISABLED -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
     <title>NIAD</title>
 
     <style>
@@ -75,7 +79,7 @@
                 pointer-events: auto;
             }
 
-        /* 🔥 PRODUCTS PANEL (FIXED CENTER PROPERLY) */
+        /* 🔥 PRODUCTS PANEL (CENTERED PROPERLY) */
         .panel {
             position: fixed;
             bottom: -100%;
@@ -96,14 +100,15 @@
                 bottom: 0;
             }
 
-        /* ABOUT PANEL */
+        /* 🔥 ABOUT PANEL (FIXED MOBILE ISSUE) */
         .right-panel {
             position: fixed;
             top: 0;
             right: 0;
             width: 100%;
             max-width: 380px;
-            height: 100%;
+            height: 100vh; /* 🔥 important fix */
+
             background: #fafafa;
             transform: translateX(100%);
             transition: transform 0.4s ease;
@@ -135,7 +140,7 @@
             flex-wrap: wrap;
         }
 
-        /* 🔥 CARD (FINAL FIXED SIZE) */
+        /* CARD */
         .card {
             width: 240px;
             height: 425px;
@@ -155,15 +160,14 @@
             color: #444;
         }
 
-        /* 🔥 MOBILE FIX (REAL ONE, NOT HALF FIXES) */
+        /* 🔥 MOBILE FIX */
         @media (max-width: 768px) {
 
             .panel {
-                width: 100%;
-                max-width: 100%;
                 left: 0;
                 transform: none;
-                border-radius: 20px 20px 0 0;
+                max-width: 100%;
+                width: 100%;
                 height: 85vh;
             }
 
@@ -243,6 +247,7 @@
         function openProducts() {
             document.getElementById("productsPanel").classList.add("active");
             document.getElementById("overlay").classList.add("active");
+            document.getElementById("aboutWrap").classList.add("hidden"); // 🔥 FIX
         }
 
         function openAbout() {
