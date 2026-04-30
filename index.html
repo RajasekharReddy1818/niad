@@ -16,7 +16,40 @@
             margin: 0;
             font-family: sans-serif;
             background: #fdfdfd;
-            overflow: hidden; /* 🔥 NO SCROLL ANYWHERE */
+        }
+
+            /* 🔥 HIDE SCROLLBAR */
+            body::-webkit-scrollbar {
+                display: none;
+            }
+
+        body {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* FADE IN */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* FLOAT */
+        @keyframes float {
+            0%,100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-6px);
+            }
         }
 
         /* ABOUT BUTTON */
@@ -26,6 +59,7 @@
             right: 16px;
             z-index: 20;
             transition: 0.3s;
+            animation: fadeUp 1s ease;
         }
 
             .top-right.hidden {
@@ -33,25 +67,27 @@
                 pointer-events: none;
             }
 
-        /* CENTER */
         .container {
             height: 100dvh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            gap: 10px; /* controls spacing between elements */
         }
 
         .logo {
-            width: 140px;
+            width: 220px; /* bigger */
+            margin-bottom: 10px;
+            animation: float 5s ease-in-out infinite;
         }
 
         .tagline {
-            margin-top: 10px;
             letter-spacing: 4px;
             font-size: 12px;
+            opacity: 0.7;
+            margin-top: 0; /* remove extra spacing */
         }
-
         /* BUTTON */
         button {
             margin-top: 20px;
@@ -59,13 +95,20 @@
             border: 1px solid black;
             background: transparent;
             cursor: pointer;
+            transition: all 0.3s ease;
         }
+
+            button:hover {
+                background: black;
+                color: white;
+                transform: translateY(-2px);
+            }
 
         /* OVERLAY */
         .overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,.3);
+            background: rgba(0,0,0,.2);
             opacity: 0;
             pointer-events: none;
             transition: .3s;
@@ -74,7 +117,6 @@
 
             .overlay.active {
                 opacity: 1;
-                pointer-events: auto;
             }
 
         /* PRODUCTS PANEL */
@@ -85,14 +127,18 @@
             transform: translate(-50%, 100%);
             width: 100%;
             max-width: 1100px;
-            height: 100dvh; /* 🔥 FULL HEIGHT */
+            height: 100dvh;
             background: #fafafa;
             border-radius: 20px 20px 0 0;
             transition: transform 0.4s ease;
             padding: 20px;
-            overflow: hidden; /* 🔥 NO SCROLL */
+            overflow-y: auto;
             z-index: 15;
         }
+
+            .panel::-webkit-scrollbar {
+                display: none;
+            }
 
             .panel.active {
                 transform: translate(-50%, 0);
@@ -109,10 +155,14 @@
             background: #fafafa;
             transform: translateX(100%);
             transition: transform 0.4s ease;
-            padding: 20px;
-            overflow: hidden; /* 🔥 NO SCROLL */
+            padding: 25px;
+            overflow-y: auto;
             z-index: 25;
         }
+
+            .right-panel::-webkit-scrollbar {
+                display: none;
+            }
 
             .right-panel.active {
                 transform: translateX(0);
@@ -122,28 +172,38 @@
         .panel-header {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
 
         .close-btn {
             cursor: pointer;
+            transition: 0.2s;
         }
+
+            .close-btn:hover {
+                transform: scale(1.2);
+            }
 
         /* GRID */
         .grid {
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gap: 20px;
             flex-wrap: wrap;
         }
 
         /* CARD */
         .card {
-            width: 220px;
-            height: 380px; /* slightly reduced to fit */
+            width: 240px;
+            height: 425px;
             border-radius: 15px;
             overflow: hidden;
+            transition: 0.3s;
         }
+
+            .card:hover {
+                transform: scale(1.03);
+            }
 
             .card img {
                 width: 100%;
@@ -153,8 +213,7 @@
 
         /* ABOUT */
         .about-content {
-            font-size: 14px;
-            line-height: 1.5;
+            line-height: 1.7;
             color: #444;
         }
 
@@ -167,7 +226,6 @@
                 max-width: 100%;
                 width: 100%;
                 height: 100dvh;
-                border-radius: 20px 20px 0 0;
             }
 
                 .panel.active {
@@ -182,15 +240,11 @@
             .card {
                 width: 90%;
                 max-width: 260px;
-                height: 340px; /* adjusted to fit */
+                height: 425px;
             }
 
             .right-panel {
                 max-width: 100%;
-            }
-
-            .about-content {
-                font-size: 13px;
             }
         }
     </style>
@@ -213,7 +267,7 @@
     <!-- PRODUCTS -->
     <div class="panel" id="productsPanel">
         <div class="panel-header">
-            <h3>Collection</h3>
+            <h3>Products</h3>
             <span class="close-btn" onclick="closeAll()">✕</span>
         </div>
 
@@ -239,7 +293,7 @@
                 We believe beauty exists in imperfection.
             </p>
             <p>
-                Every piece is intentionally imperfect, designed to feel authentic.
+                Every piece is intentionally imperfect.
             </p>
             <p><strong>Contact:</strong> by.niad@gmail.com</p>
         </div>
