@@ -18,7 +18,7 @@
             background: #fdfdfd;
         }
 
-            /* 🔥 HIDE SCROLLBAR */
+            /* HIDE SCROLLBAR */
             body::-webkit-scrollbar {
                 display: none;
             }
@@ -28,7 +28,7 @@
             scrollbar-width: none;
         }
 
-        /* FADE IN */
+        /* ANIMATIONS */
         @keyframes fadeUp {
             from {
                 opacity: 0;
@@ -41,7 +41,6 @@
             }
         }
 
-        /* FLOAT */
         @keyframes float {
             0%,100% {
                 transform: translateY(0);
@@ -67,35 +66,38 @@
                 pointer-events: none;
             }
 
+        /* CENTER */
         .container {
             height: 100dvh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 10px; /* controls spacing between elements */
+            gap: 10px;
+            animation: fadeUp 1s ease;
         }
 
+        /* LOGO */
         .logo {
-            width: 220px; /* bigger */
-            margin-bottom: 10px;
+            width: 220px;
             animation: float 5s ease-in-out infinite;
         }
 
+        /* TEXT */
         .tagline {
             letter-spacing: 4px;
             font-size: 12px;
             opacity: 0.7;
-            margin-top: 0; /* remove extra spacing */
         }
+
         /* BUTTON */
         button {
-            margin-top: 20px;
+            margin-top: 15px;
             padding: 10px 24px;
             border: 1px solid black;
             background: transparent;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: 0.3s;
         }
 
             button:hover {
@@ -170,12 +172,21 @@
 
         /* HEADER */
         .panel-header {
+            position: relative;
             display: flex;
-            justify-content: space-between;
+            align-items: center;
             margin-bottom: 15px;
         }
 
+            .panel-header h3 {
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                margin: 0;
+            }
+
         .close-btn {
+            margin-left: auto;
             cursor: pointer;
             transition: 0.2s;
         }
@@ -184,12 +195,12 @@
                 transform: scale(1.2);
             }
 
-        /* GRID */
+        /* 🔥 GRID FIX */
         .grid {
-            display: flex;
-            justify-content: center;
+            display: grid;
+            grid-template-columns: repeat(4, 240px);
             gap: 20px;
-            flex-wrap: wrap;
+            justify-content: center;
         }
 
         /* CARD */
@@ -225,7 +236,6 @@
                 transform: translateY(100%);
                 max-width: 100%;
                 width: 100%;
-                height: 100dvh;
             }
 
                 .panel.active {
@@ -233,8 +243,8 @@
                 }
 
             .grid {
-                flex-direction: column;
-                align-items: center;
+                grid-template-columns: 1fr;
+                justify-items: center;
             }
 
             .card {
@@ -267,7 +277,7 @@
     <!-- PRODUCTS -->
     <div class="panel" id="productsPanel">
         <div class="panel-header">
-            <h3>Products</h3>
+            <h3>Collection</h3>
             <span class="close-btn" onclick="closeAll()">✕</span>
         </div>
 
