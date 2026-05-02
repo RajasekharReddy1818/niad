@@ -31,12 +31,10 @@
             border-radius: 0 0 14px 14px;
         }
 
-        /* LOGO */
         .logo {
             width: 85px;
         }
 
-        /* NAV LINKS */
         .nav-links {
             display: flex;
             gap: 18px;
@@ -57,11 +55,6 @@
                     transform: translateY(-1px);
                 }
 
-        button, a {
-            -webkit-tap-highlight-color: transparent;
-            color: black;
-        }
-
         /* DROPDOWN */
         .dropdown {
             position: absolute;
@@ -72,23 +65,32 @@
             border-radius: 8px;
             display: none;
             flex-direction: column;
-            animation: fadeDown 0.25s ease;
         }
-
-            .dropdown button {
-                padding: 10px 20px;
-            }
-
-                .dropdown button:hover {
-                    background: #f3f3f3;
-                }
 
             .dropdown.active {
                 display: flex;
             }
 
+            .dropdown button {
+                padding: 10px 20px;
+            }
+
+        /* 🔥 HOME HERO (NEW) */
+        .home {
+            margin-top: 70px;
+            display: flex;
+            height: calc(100vh - 70px);
+        }
+
+            .home img {
+                width: 50%;
+                height: 100%;
+                object-fit: cover;
+            }
+
         /* GRID */
         .grid {
+            display: none;
             margin-top: 120px;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 240px));
@@ -104,19 +106,7 @@
             border-radius: 14px;
             overflow: hidden;
             position: relative;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeUp 0.6s ease forwards;
-            transition: transform 0.25s ease;
         }
-
-            .card:hover {
-                transform: scale(1.02);
-            }
-
-            .card:active {
-                transform: scale(0.98);
-            }
 
             .card img {
                 width: 100%;
@@ -132,16 +122,9 @@
             background: rgba(0,0,0,0.5);
             color: white;
             border: none;
-            font-size: 18px;
             padding: 6px 10px;
             cursor: pointer;
-            z-index: 2;
-            transition: 0.2s;
         }
-
-            .arrow:hover {
-                background: black;
-            }
 
         .left {
             left: 6px;
@@ -151,69 +134,31 @@
             right: 6px;
         }
 
-        /* ABOUT OVERLAY */
+        /* ABOUT */
         .about-overlay {
             position: fixed;
             inset: 0;
             background: #fafafa;
             z-index: 300;
-            opacity: 0;
-            pointer-events: none;
-            transform: translateY(20px);
-            transition: 0.4s ease;
-            padding: 30px 20px;
+            display: none;
         }
 
             .about-overlay.active {
-                opacity: 1;
-                pointer-events: all;
-                transform: translateY(0);
+                display: block;
             }
-
-        .about-content {
-            max-width: 600px;
-            margin: 60px auto;
-            line-height: 1.7;
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 20px;
-            right: 25px;
-            font-size: 20px;
-            cursor: pointer;
-        }
-
-        /* ANIMATIONS */
-        @keyframes fadeUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeDown {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
 
         /* MOBILE */
         @media (max-width: 768px) {
 
-            .navbar {
-                padding: 6px 14px;
+            .home {
+                flex-direction: column;
+                height: auto;
             }
 
-            .logo {
-                width: 70px;
-            }
+                .home img {
+                    width: 100%;
+                    height: 50vh;
+                }
 
             .grid {
                 grid-template-columns: 1fr;
@@ -223,13 +168,8 @@
 
             .card {
                 width: 90%;
-                margin: auto;
-                aspect-ratio: 3 / 5;
+                aspect-ratio: 3/5;
                 height: auto;
-            }
-
-            .dropdown {
-                right: 0;
             }
         }
     </style>
@@ -248,38 +188,35 @@
             <div class="dropdown" id="dropdown">
                 <button onclick="filterProducts('all')">ALL</button>
                 <button onclick="filterProducts('chain')">CHAINS</button>
-                <button onclick="filterProducts('ring')">RINGS</button>
                 <button onclick="filterProducts('bracelet')">BRACELETS</button>
             </div>
         </div>
     </div>
 
-    <!-- PRODUCTS -->
-    <div class="grid">
+    <!-- 🔥 HOME DISPLAY -->
+    <div class="home" id="homeSection">
+        <img src="img1.jpeg">
+        <img src="img4.jpeg">
+    </div>
 
-        <!-- FEATURED CHAINS -->
-        <div class="card featured" data-type="chain" data-images="img1.jpeg,img1b.jpeg,img1c.jpeg">
+    <!-- PRODUCTS -->
+    <div class="grid" id="productGrid">
+
+        <div class="card" data-type="chain" data-images="img1.jpeg,img1b.jpeg">
             <button class="arrow left" onclick="prevImage(this)">‹</button>
             <img src="img1.jpeg">
             <button class="arrow right" onclick="nextImage(this)">›</button>
         </div>
 
-        <div class="card featured" data-type="chain" data-images="img4.jpeg,img4b.jpeg">
+        <div class="card" data-type="chain" data-images="img4.jpeg,img4b.jpeg">
             <button class="arrow left" onclick="prevImage(this)">‹</button>
             <img src="img4.jpeg">
             <button class="arrow right" onclick="nextImage(this)">›</button>
         </div>
 
-        <!-- OTHER PRODUCTS -->
         <div class="card" data-type="bracelet" data-images="img2.jpeg,img2b.jpeg">
             <button class="arrow left" onclick="prevImage(this)">‹</button>
             <img src="img2.jpeg">
-            <button class="arrow right" onclick="nextImage(this)">›</button>
-        </div>
-
-        <div class="card" data-type="bracelet" data-images="img3.jpeg,img3b.jpeg">
-            <button class="arrow left" onclick="prevImage(this)">‹</button>
-            <img src="img3.jpeg">
             <button class="arrow right" onclick="nextImage(this)">›</button>
         </div>
 
@@ -287,13 +224,10 @@
 
     <!-- ABOUT -->
     <div class="about-overlay" id="aboutOverlay">
-        <span class="close-btn" onclick="closeAbout()">✕</span>
-
-        <div class="about-content">
+        <span onclick="closeAbout()">✕</span>
+        <div style="padding:40px;">
             <h2>About NIAD</h2>
-            <p>NIAD was never created to be perfect.</p>
-            <p>We believe beauty exists in imperfection.</p>
-            <p><strong>Contact:</strong> by.niad@gmail.com</p>
+            <p>Minimal. Imperfect. Real.</p>
         </div>
     </div>
 
@@ -303,39 +237,34 @@
             document.getElementById("dropdown").classList.toggle("active");
         }
 
-        /* DEFAULT VIEW */
-        function showFeatured() {
-            let cards = document.querySelectorAll(".card");
-            cards.forEach(card => {
-                if (card.classList.contains("featured")) {
-                    card.style.display = "block";
-                } else {
-                    card.style.display = "none";
-                }
-            });
+        /* SWITCH TO PRODUCTS */
+        function showProducts() {
+            document.getElementById("homeSection").style.display = "none";
+            document.getElementById("productGrid").style.display = "grid";
+        }
+
+        /* HOME */
+        function goHome() {
+            document.getElementById("homeSection").style.display = "flex";
+            document.getElementById("productGrid").style.display = "none";
+            closeAbout();
         }
 
         /* FILTER */
         function filterProducts(type) {
+            showProducts();
+
             let cards = document.querySelectorAll(".card");
 
-            cards.forEach((card, index) => {
+            cards.forEach(card => {
                 if (type === "all" || card.dataset.type === type) {
                     card.style.display = "block";
-                    card.style.animationDelay = index * 0.08 + "s";
                 } else {
                     card.style.display = "none";
                 }
             });
 
             document.getElementById("dropdown").classList.remove("active");
-        }
-
-        /* HOME */
-        function goHome() {
-            showFeatured();
-            closeAbout();
-            window.scrollTo({ top: 0, behavior: "smooth" });
         }
 
         /* ABOUT */
@@ -370,8 +299,8 @@
             img.src = images[current];
         }
 
-        /* INITIAL LOAD */
-        showFeatured();
+        /* DEFAULT */
+        goHome();
 
     </script>
 
