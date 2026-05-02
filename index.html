@@ -29,12 +29,19 @@
             z-index: 100;
             border-bottom: 2px solid black;
             border-radius: 0 0 14px 14px;
+            animation: fadeDown 0.6s ease;
         }
 
         .logo {
             width: 85px;
+            transition: transform 0.3s ease;
         }
 
+            .logo:hover {
+                transform: scale(1.05);
+            }
+
+        /* NAV LINKS */
         .nav-links {
             display: flex;
             gap: 18px;
@@ -47,12 +54,12 @@
                 cursor: pointer;
                 font-size: 13px;
                 color: black;
-                transition: 0.25s;
+                transition: all 0.25s ease;
             }
 
                 .nav-links button:hover {
                     opacity: 0.6;
-                    transform: translateY(-1px);
+                    transform: translateY(-2px);
                 }
 
         /* DROPDOWN */
@@ -65,6 +72,7 @@
             border-radius: 8px;
             display: none;
             flex-direction: column;
+            animation: fadeDown 0.3s ease;
         }
 
             .dropdown.active {
@@ -73,9 +81,14 @@
 
             .dropdown button {
                 padding: 10px 20px;
+                transition: background 0.2s ease;
             }
 
-        /* 🔥 HOME HERO (NEW) */
+                .dropdown button:hover {
+                    background: #f3f3f3;
+                }
+
+        /* HOME */
         .home {
             margin-top: 70px;
             display: flex;
@@ -86,13 +99,17 @@
                 width: 50%;
                 height: 100%;
                 object-fit: cover;
+                /* REMOVE animation */
+                transition: none;
             }
 
+                .home img:hover {
+                    transform: none;
+                }
         /* GRID */
         .grid {
             display: none;
             margin-top: 120px;
-            display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 240px));
             justify-content: center;
             gap: 20px;
@@ -106,7 +123,19 @@
             border-radius: 14px;
             overflow: hidden;
             position: relative;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.6s ease forwards;
+            transition: transform 0.25s ease;
         }
+
+            .card:hover {
+                transform: scale(1.03);
+            }
+
+            .card:active {
+                transform: scale(0.98);
+            }
 
             .card img {
                 width: 100%;
@@ -124,7 +153,12 @@
             border: none;
             padding: 6px 10px;
             cursor: pointer;
+            transition: 0.2s;
         }
+
+            .arrow:hover {
+                background: black;
+            }
 
         .left {
             left: 6px;
@@ -140,12 +174,58 @@
             inset: 0;
             background: #fafafa;
             z-index: 300;
-            display: none;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(20px);
+            transition: 0.4s ease;
+            padding: 30px 20px;
         }
 
             .about-overlay.active {
-                display: block;
+                opacity: 1;
+                pointer-events: all;
+                transform: translateY(0);
             }
+
+        .about-content {
+            max-width: 650px;
+            margin: 60px auto;
+            line-height: 1.8;
+            animation: fadeUp 0.6s ease;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 20px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+            .close-btn:hover {
+                transform: scale(1.2);
+            }
+
+        /* ANIMATIONS */
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
         /* MOBILE */
         @media (max-width: 768px) {
@@ -188,21 +268,20 @@
             <div class="dropdown" id="dropdown">
                 <button onclick="filterProducts('all')">ALL</button>
                 <button onclick="filterProducts('chain')">CHAINS</button>
+                <button onclick="filterProducts('ring')">RINGS</button>
                 <button onclick="filterProducts('bracelet')">BRACELETS</button>
             </div>
         </div>
     </div>
 
-    <!-- 🔥 HOME DISPLAY -->
     <div class="home" id="homeSection">
         <img src="img1.jpeg">
         <img src="img4.jpeg">
     </div>
 
-    <!-- PRODUCTS -->
     <div class="grid" id="productGrid">
 
-        <div class="card" data-type="chain" data-images="img1.jpeg,img1b.jpeg">
+        <div class="card" data-type="chain" data-images="img1.jpeg,img1b.jpeg,img1c.jpeg">
             <button class="arrow left" onclick="prevImage(this)">‹</button>
             <img src="img1.jpeg">
             <button class="arrow right" onclick="nextImage(this)">›</button>
@@ -220,45 +299,62 @@
             <button class="arrow right" onclick="nextImage(this)">›</button>
         </div>
 
+        <div class="card" data-type="bracelet" data-images="img3.jpeg,img3b.jpeg">
+            <button class="arrow left" onclick="prevImage(this)">‹</button>
+            <img src="img3.jpeg">
+            <button class="arrow right" onclick="nextImage(this)">›</button>
+        </div>
+
     </div>
 
-    <!-- ABOUT -->
     <div class="about-overlay" id="aboutOverlay">
-        <span onclick="closeAbout()">✕</span>
-        <div style="padding:40px;">
+        <span class="close-btn" onclick="closeAbout()">✕</span>
+
+        <div class="about-content">
             <h2>About NIAD</h2>
-            <p>Minimal. Imperfect. Real.</p>
+
+            <p>NIAD was never created to be perfect.</p>
+
+            <p>
+                It lives in the space between raw, unfinished, and beautifully real.
+                We believe beauty exists in imperfection—where irregular forms,
+                unexpected details, and handmade textures create true character.
+            </p>
+
+            <p>
+                Every piece is intentionally imperfect, designed to feel authentic
+                rather than polished. NIAD embraces individuality, quiet boldness,
+                and self-expression for those who find beauty in the undone and the uncommon.
+            </p>
+
+            <p><strong>Contact:</strong> by.niad@gmail.com</p>
         </div>
     </div>
 
     <script>
-
         function toggleDropdown() {
             document.getElementById("dropdown").classList.toggle("active");
         }
 
-        /* SWITCH TO PRODUCTS */
         function showProducts() {
             document.getElementById("homeSection").style.display = "none";
             document.getElementById("productGrid").style.display = "grid";
         }
 
-        /* HOME */
         function goHome() {
             document.getElementById("homeSection").style.display = "flex";
             document.getElementById("productGrid").style.display = "none";
             closeAbout();
         }
 
-        /* FILTER */
         function filterProducts(type) {
             showProducts();
-
             let cards = document.querySelectorAll(".card");
 
-            cards.forEach(card => {
+            cards.forEach((card, index) => {
                 if (type === "all" || card.dataset.type === type) {
                     card.style.display = "block";
+                    card.style.animationDelay = index * 0.08 + "s";
                 } else {
                     card.style.display = "none";
                 }
@@ -267,7 +363,6 @@
             document.getElementById("dropdown").classList.remove("active");
         }
 
-        /* ABOUT */
         function openAbout() {
             document.getElementById("aboutOverlay").classList.add("active");
         }
@@ -276,14 +371,11 @@
             document.getElementById("aboutOverlay").classList.remove("active");
         }
 
-        /* IMAGE SWITCH */
         function nextImage(btn) {
             let card = btn.parentElement;
             let img = card.querySelector("img");
-
             let images = card.dataset.images.split(",");
             let current = images.indexOf(img.src.split("/").pop());
-
             current = (current + 1) % images.length;
             img.src = images[current];
         }
@@ -291,17 +383,13 @@
         function prevImage(btn) {
             let card = btn.parentElement;
             let img = card.querySelector("img");
-
             let images = card.dataset.images.split(",");
             let current = images.indexOf(img.src.split("/").pop());
-
             current = (current - 1 + images.length) % images.length;
             img.src = images[current];
         }
 
-        /* DEFAULT */
         goHome();
-
     </script>
 
 </body>
