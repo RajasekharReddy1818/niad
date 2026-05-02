@@ -49,7 +49,7 @@
                 cursor: pointer;
                 font-size: 13px;
                 color: black;
-                transition: all 0.25s ease;
+                transition: 0.25s;
             }
 
                 .nav-links button:hover {
@@ -57,7 +57,6 @@
                     transform: translateY(-1px);
                 }
 
-        /* REMOVE BLUE TAP */
         button, a {
             -webkit-tap-highlight-color: transparent;
             color: black;
@@ -78,7 +77,6 @@
 
             .dropdown button {
                 padding: 10px 20px;
-                text-align: left;
             }
 
                 .dropdown button:hover {
@@ -89,13 +87,13 @@
                 display: flex;
             }
 
-        /* GRID */
         .grid {
             margin-top: 120px;
             display: grid;
-            grid-template-columns: repeat(4, 240px);
+            grid-template-columns: repeat(auto-fit, minmax(240px, 240px));
+            justify-content: center; /* THIS is the key */
+
             gap: 20px;
-            justify-content: center;
             padding-bottom: 50px;
         }
 
@@ -122,39 +120,41 @@
             .card img {
                 width: 100%;
                 height: 100%;
-                object-fit: cover; /* KEEP THIS */
+                object-fit: cover;
             }
 
-        /* ABOUT PANEL */
-        .about-panel {
+        /* ABOUT OVERLAY */
+        .about-overlay {
             position: fixed;
-            right: 0;
-            top: 0;
-            width: 90%;
-            max-width: 350px;
-            height: 100vh;
+            inset: 0;
             background: #fafafa;
-            border-left: 2px solid black;
-            transform: translateX(100%);
+            z-index: 300;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(20px);
             transition: 0.4s ease;
-            padding: 20px;
-            z-index: 200;
+            padding: 30px 20px;
         }
 
-            .about-panel.active {
-                transform: translateX(0);
+            .about-overlay.active {
+                opacity: 1;
+                pointer-events: all;
+                transform: translateY(0);
             }
+
+        .about-content {
+            max-width: 600px;
+            margin: 60px auto;
+            line-height: 1.7;
+        }
 
         .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 20px;
             cursor: pointer;
-            font-size: 18px;
-            float: right;
-            transition: 0.2s;
         }
-
-            .close-btn:hover {
-                transform: scale(1.2);
-            }
 
         /* ANIMATIONS */
         @keyframes fadeUp {
@@ -187,20 +187,28 @@
                 width: 70px;
             }
 
-            .grid {
-                grid-template-columns: 1fr;
-                margin-top: 110px;
-            }
+            
+
+                .grid {
+                    grid-template-columns: 1fr;
+                    justify-items: center; /* center cards */
+                    margin-top: 110px;
+                }
+            
 
             .card {
                 width: 90%;
                 margin: auto;
-                aspect-ratio: 3 / 5; /* FIX IMAGE CONSISTENCY */
+                aspect-ratio: 3 / 5;
                 height: auto;
             }
 
             .dropdown {
                 right: 0;
+            }
+
+            .about-content {
+                margin-top: 80px;
             }
         }
     </style>
@@ -208,9 +216,8 @@
 
 <body>
 
-    <!-- NAVBAR -->
     <div class="navbar">
-        <img src="logo.png" class="logo">
+        <img src="logo.jpeg" class="logo">
 
         <div class="nav-links">
             <button onclick="goHome()">HOME</button>
@@ -229,28 +236,26 @@
     <!-- PRODUCTS -->
     <div class="grid">
 
-        <div class="card" data-type="chain"><img src="img1.jpeg"></div>
+        <!-- ONLY THESE SHOW BY DEFAULT -->
+        <div class="card featured" data-type="chain"><img src="img1.jpeg"></div>
+        <div class="card featured" data-type="chain"><img src="img4.jpeg"></div>
+
+        <!-- HIDDEN INITIALLY -->
         <div class="card" data-type="ring"><img src="img2.jpeg"></div>
         <div class="card" data-type="bracelet"><img src="img3.jpeg"></div>
-        <div class="card" data-type="chain"><img src="img4.jpeg"></div>
 
     </div>
 
     <!-- ABOUT -->
-    <div class="about-panel" id="aboutPanel">
+    <div class="about-overlay" id="aboutOverlay">
         <span class="close-btn" onclick="closeAbout()">✕</span>
-        <h3>About NIAD</h3>
 
-        <p>NIAD was never created to be perfect.</p>
-
-        <p>
-            It lives in the space between raw, unfinished, and beautifully real.
-            We believe beauty exists in imperfection.
-        </p>
-
-        <p>Every piece is intentionally imperfect.</p>
-
-        <p><strong>Contact:</strong> by.niad@gmail.com</p>
+        <div class="about-content">
+            <h2>About NIAD</h2>
+            <p>NIAD was never created to be perfect.</p>
+            <p>We believe beauty exists in imperfection.</p>
+            <p><strong>Contact:</strong> by.niad@gmail.com</p>
+        </div>
     </div>
 
     <script>
@@ -259,6 +264,20 @@
             document.getElementById("dropdown").classList.toggle("active");
         }
 
+        /* DEFAULT STATE */
+        function showFeatured() {
+            let cards = document.querySelectorAll(".card");
+
+            cards.forEach(card => {
+                if (card.classList.contains("featured")) {
+                    card.style.display = "block";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        }
+
+        /* FILTER */
         function filterProducts(type) {
             let cards = document.querySelectorAll(".card");
 
@@ -274,19 +293,24 @@
             document.getElementById("dropdown").classList.remove("active");
         }
 
+        /* HOME */
         function goHome() {
-            filterProducts("all");
+            showFeatured();
             closeAbout();
             window.scrollTo({ top: 0, behavior: "smooth" });
         }
 
+        /* ABOUT */
         function openAbout() {
-            document.getElementById("aboutPanel").classList.add("active");
+            document.getElementById("aboutOverlay").classList.add("active");
         }
 
         function closeAbout() {
-            document.getElementById("aboutPanel").classList.remove("active");
+            document.getElementById("aboutOverlay").classList.remove("active");
         }
+
+        /* INITIAL LOAD */
+        showFeatured();
 
     </script>
 
