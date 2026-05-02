@@ -48,12 +48,20 @@
                 background: none;
                 cursor: pointer;
                 font-size: 13px;
-                transition: 0.3s;
+                color: black;
+                transition: all 0.25s ease;
             }
 
                 .nav-links button:hover {
                     opacity: 0.6;
+                    transform: translateY(-1px);
                 }
+
+        /* REMOVE BLUE TAP */
+        button, a {
+            -webkit-tap-highlight-color: transparent;
+            color: black;
+        }
 
         /* DROPDOWN */
         .dropdown {
@@ -65,7 +73,7 @@
             border-radius: 8px;
             display: none;
             flex-direction: column;
-            animation: fadeDown 0.3s ease;
+            animation: fadeDown 0.25s ease;
         }
 
             .dropdown button {
@@ -83,7 +91,7 @@
 
         /* GRID */
         .grid {
-            margin-top: 120px; /* pushed down properly */
+            margin-top: 120px;
             display: grid;
             grid-template-columns: repeat(4, 240px);
             gap: 20px;
@@ -100,12 +108,21 @@
             opacity: 0;
             transform: translateY(20px);
             animation: fadeUp 0.6s ease forwards;
+            transition: transform 0.25s ease;
         }
+
+            .card:hover {
+                transform: scale(1.02);
+            }
+
+            .card:active {
+                transform: scale(0.98);
+            }
 
             .card img {
                 width: 100%;
                 height: 100%;
-                object-fit: cover;
+                object-fit: cover; /* KEEP THIS */
             }
 
         /* ABOUT PANEL */
@@ -132,7 +149,12 @@
             cursor: pointer;
             font-size: 18px;
             float: right;
+            transition: 0.2s;
         }
+
+            .close-btn:hover {
+                transform: scale(1.2);
+            }
 
         /* ANIMATIONS */
         @keyframes fadeUp {
@@ -173,6 +195,8 @@
             .card {
                 width: 90%;
                 margin: auto;
+                aspect-ratio: 3 / 5; /* FIX IMAGE CONSISTENCY */
+                height: auto;
             }
 
             .dropdown {
